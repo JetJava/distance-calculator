@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd"
+        objectQuotingStrategy="QUOTE_ONLY_RESERVED_WORDS">
+    <changeSet id="1632158373564-1" author="jethack">
+        <createTable tableName="city">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_city"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="latitude" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="longitude" type="DOUBLE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet id="1632158373564-2" author="jethack">
+        <createTable tableName="distance">
+            <column autoIncrement="true" name="id" type="BIGINT">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="pk_distance"/>
+            </column>
+            <column name="from_city_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="to_city_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance" type="DOUBLE"/>
+        </createTable>
+    </changeSet>
+    <changeSet id="1632158373564-3" author="jethack">
+        <createIndex indexName="name_index" tableName="city">
+            <column name="name"/>
+        </createIndex>
+    </changeSet>
+    <changeSet id="1632158373564-4" author="jethack">
+        <addForeignKeyConstraint baseColumnNames="from_city_id" baseTableName="distance"
+                                 constraintName="FK_DISTANCE_ON_FROM_CITY" referencedColumnNames="id"
+                                 referencedTableName="city"/>
+    </changeSet>
+    <changeSet id="1632158373564-5" author="jethack">
+        <addForeignKeyConstraint baseColumnNames="to_city_id" baseTableName="distance"
+                                 constraintName="FK_DISTANCE_ON_TO_CITY" referencedColumnNames="id"
+                                 referencedTableName="city"/>
+    </changeSet>
+
+</databaseChangeLog>
