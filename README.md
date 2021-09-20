@@ -8,7 +8,7 @@
   
   
 Содержание файла 'testFile.xml':
-  <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+  "<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
   <UploadData>
       <Cities>
           <City>
@@ -29,7 +29,7 @@
               <Distance>1100.0</Distance>
           </Distance>
       </Distances>
-  </UploadData>
+  </UploadData>"
   
 Структура JSON:  
   {
