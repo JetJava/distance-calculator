@@ -14,3 +14,5 @@
    "fromCity": ["Самара", "Тамбов"],
    "toCity": ["Москва", "Тверь"]
   }
+
+Параметр 'calculationType' может принимать значения CROWFLIGHT, DISTANCE_MATRIX, ALL.
