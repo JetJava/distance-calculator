@@ -13,7 +13,7 @@ import ru.jethack.distancecalculator.repository.CityRepository;
 import ru.jethack.distancecalculator.repository.DistanceRepository;
 import ru.jethack.distancecalculator.service.CalculateDistanceService;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static java.lang.Math.*;
@@ -62,7 +62,7 @@ public class CalculateDistanceServiceImpl implements CalculateDistanceService {
     }
 
     private List<DistanceDto> calculateCrowflightDistance(CalculateDistanceDto calculateDistanceDto) throws CityNotFoundException {
-        List<DistanceDto> result = new ArrayList<>();
+        List<DistanceDto> result = new LinkedList<>();
         for (String fromCityName : calculateDistanceDto.getFromCityNameList()) {
             for (String toCityName : calculateDistanceDto.getToCityNameList()) {
                 City fromCity = cityRepository.findByName(fromCityName);
@@ -81,7 +81,7 @@ public class CalculateDistanceServiceImpl implements CalculateDistanceService {
     }
 
     private List<DistanceDto> calculateDistanceByDistanceMatrix(CalculateDistanceDto calculateDistanceDto) throws CityNotFoundException, DistanceNotFoundException {
-        List<DistanceDto> result = new ArrayList<>();
+        List<DistanceDto> result = new LinkedList<>();
         for (String fromCityName : calculateDistanceDto.getFromCityNameList()) {
             for (String toCityName : calculateDistanceDto.getToCityNameList()) {
                 City fromCity = cityRepository.findByName(fromCityName);

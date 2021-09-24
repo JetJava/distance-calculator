@@ -4,5 +4,5 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public enum CalculationType {
-    CROWFLIGHT, DISTANCE_MATRIX, ALL;
+    CROWFLIGHT, DISTANCE_MATRIX, ALL
 }

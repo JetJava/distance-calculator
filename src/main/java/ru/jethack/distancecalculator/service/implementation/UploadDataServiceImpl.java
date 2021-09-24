@@ -15,6 +15,8 @@ import ru.jethack.distancecalculator.repository.DistanceRepository;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.util.LinkedList;
+import java.util.List;
 
 @Service
 public class UploadDataServiceImpl implements UploadDataService {
@@ -32,18 +34,22 @@ public class UploadDataServiceImpl implements UploadDataService {
 
     @Override
     public Object saveData(MultipartFile file) {
+        List<City> cityList = new LinkedList<>();
+        List<Distance> distanceList = new LinkedList<>();
         try {
             JAXBContext context = JAXBContext.newInstance(UploadData.class);
             UploadData uploadData = (UploadData) context.createUnmarshaller().unmarshal(file.getInputStream());
             for (CityData cityData : uploadData.getCities()) {
                 City city = cityRepository.findByName(cityData.getName());
                 if (city == null) {
-                    cityRepository.save(new City(cityData.getName(), cityData.getLatitude(), cityData.getLongitude()));
+                    cityList.add(new City(cityData.getName(), cityData.getLatitude(), cityData.getLongitude()));
                 } else {
                     city.setLatitude(cityData.getLatitude());
                     city.setLongitude(cityData.getLongitude());
                 }
             }
+            cityRepository.saveAll(cityList);
+
             for (DistanceData distanceData : uploadData.getDistances()) {
                 City fromCity = cityRepository.findByName(distanceData.getFromCityName());
                 City toCity = cityRepository.findByName(distanceData.getToCityName());
@@ -51,13 +57,14 @@ public class UploadDataServiceImpl implements UploadDataService {
                 if (toCity == null) throw new CityNotFoundException(distanceData.getToCityName());
                 Distance distance = distanceRepository.findByFromCityAndToCity(fromCity, toCity);
                 if (distance == null) {
-                    distanceRepository.save(new Distance(cityRepository.findByName(distanceData.getFromCityName()),
+                    distanceList.add(new Distance(cityRepository.findByName(distanceData.getFromCityName()),
                             cityRepository.findByName(distanceData.getToCityName()),
                             distanceData.getDistance()));
                 } else {
                     distance.setDistance(distanceData.getDistance());
                 }
             }
+            distanceRepository.saveAll(distanceList);
         } catch (JAXBException | IOException e) {
             e.printStackTrace();
         } catch (CityNotFoundException e) {

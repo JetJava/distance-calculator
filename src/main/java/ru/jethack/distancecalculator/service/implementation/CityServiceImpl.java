@@ -6,7 +6,7 @@ import ru.jethack.distancecalculator.model.City;
 import ru.jethack.distancecalculator.repository.CityRepository;
 import ru.jethack.distancecalculator.service.CityService;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 @Service
@@ -21,7 +21,7 @@ public class CityServiceImpl implements CityService {
     @Override
     public List<CityDto> getAllCities() {
         List<City> cities = cityRepository.findAll();
-        ArrayList<CityDto> cityDtoList = new ArrayList<>();
+        List<CityDto> cityDtoList = new LinkedList<>();
         for (City city : cities) {
             cityDtoList.add(new CityDto(city.getId(), city.getName()));
         }

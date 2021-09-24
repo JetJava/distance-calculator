@@ -8,6 +8,7 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
+    show-sql: false
 
   liquibase:
     change-log: /db/changelog/db.changelog-master.xml
